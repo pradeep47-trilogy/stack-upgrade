@@ -4,9 +4,9 @@ from bot.code_suggester import CodeSuggester
 from bot.test_generator import TestGenerator
 from bot.pr_creator import PullRequestCreator
 
-REPO_PATH = '/path/to/your/repo'
+REPO_PATH = 'https://github.com/pradeep47-trilogy/'
 GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
-REPO_NAME = 'your-username/dependency-upgrade-bot'
+REPO_NAME = 'pradeep47-trilogy/stack-upgrade'
 
 def main():
     # Step 1: Upgrade Dependencies
@@ -15,7 +15,7 @@ def main():
 
     # Step 2: Suggest Code Changes
     suggester = CodeSuggester()
-    changes = suggester.suggest_code_changes(dependency="example-dependency")
+    changes = suggester.suggest_code_changes(dependency="maven)
 
     # Step 3: Generate Tests
     test_generator = TestGenerator()
