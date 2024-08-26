@@ -15,7 +15,7 @@ def main():
 
     # Step 2: Suggest Code Changes
     suggester = CodeSuggester()
-    changes = suggester.suggest_code_changes(dependency="maven)
+    changes = suggester.suggest_code_changes(dependency="maven")
 
     # Step 3: Generate Tests
     test_generator = TestGenerator()

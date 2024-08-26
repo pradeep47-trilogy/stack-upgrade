@@ -14,7 +14,7 @@ class DependencyUpgrader:
                 elif file.endswith('.yml') or file.endswith('.yaml'):
                     self._update_yaml_dependencies(os.path.join(root, file))
     
-    def _update_xml_dependencies(self, file_path):
+    def update_xml_dependencies(self, file_path):
         tree = ET.parse(file_path)
         root = tree.getroot()
         # Assume the structure is known for dependencies
@@ -25,7 +25,7 @@ class DependencyUpgrader:
                 version.text = self._get_latest_version(dependency)
         tree.write(file_path)
 
-    def _update_yaml_dependencies(self, file_path):
+    def update_yaml_dependencies(self, file_path):
         with open(file_path, 'r') as stream:
             data = yaml.safe_load(stream)
         
@@ -36,6 +36,19 @@ class DependencyUpgrader:
         with open(file_path, 'w') as stream:
             yaml.safe_dump(data, stream)
 
-    def _get_latest_version(self, dependency):
-        # This is a placeholder function, in reality, it would query a package repository
-        return "latest-version"
+    def get_latest_version(package_name, package_type, group_id=None):
+        if package_type == 'maven':
+            return get_latest_maven_version(group_id, package_name)
+        elif package_type == 'npm':
+            return get_latest_npm_version(package_name)
+        elif package_type == 'pypi':
+            return get_latest_pypi_version(package_name)
+        elif package_type == 'rubygems':
+            return get_latest_rubygems_version(package_name)
+        else:
+            raise ValueError("Unsupported package type")
+
+    
+    latest_version = get_latest_version("express", "npm")
+    print(f"Latest version: {latest_version}")
+
