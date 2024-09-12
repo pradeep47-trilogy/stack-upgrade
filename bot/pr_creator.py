@@ -1,5 +1,6 @@
 from github import Github
 import os
+import requests
 
 class PullRequestCreator:
     def __init__(self, repo_name, token):
@@ -11,4 +12,9 @@ class PullRequestCreator:
         head = branch_name
         base = "main"
         pr = repo.create_pull(title=title, body=body, head=head, base=base)
-        return pr.url
+        if pr.url:
+            print(f"Pull request created successfully: {pr.url}")
+            return pr.url
+        else:
+            print(f"Failed to create pull request: {pr}")
+            return None

@@ -13,6 +13,8 @@ class DependencyUpgrader:
                     self._update_xml_dependencies(os.path.join(root, file))
                 elif file.endswith('.yml') or file.endswith('.yaml'):
                     self._update_yaml_dependencies(os.path.join(root, file))
+                elif file.endswith('.txt') or file.endswith('.yaml'):
+                    self._update_yaml_dependencies(os.path.join(root, file))
     
     def _update_xml_dependencies(self, file_path):
         tree = ET.parse(file_path)
@@ -25,6 +27,17 @@ class DependencyUpgrader:
                 version.text = self._get_latest_version(dependency)
         tree.write(file_path)
 
+    def _update_yaml_dependencies(self, file_path):
+        with open(file_path, 'r') as stream:
+            data = yaml.safe_load(stream)
+        
+        # Update the relevant parts of the YAML (structure depends on the file)
+        for dependency, details in data.get('dependencies', {}).items():
+            details['version'] = self._get_latest_version(dependency)
+        
+        with open(file_path, 'w') as stream:
+            yaml.safe_dump(data, stream)
+    
     def _update_yaml_dependencies(self, file_path):
         with open(file_path, 'r') as stream:
             data = yaml.safe_load(stream)
